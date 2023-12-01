@@ -12,7 +12,7 @@ import pickle
 
 ##- Parameters to be setted
 
-datasets_path = 'datasets'
+datasets_path = '/home/opontorno/data/opontorno/datasets'
 dcts_path='dcts'
 DC_coeff = False,
 laplacian_stats = False
@@ -98,7 +98,7 @@ print('Control: ')
 for model in os.listdir(datasets_path):
     architectures_path = os.path.join(datasets_path, model)
     for architecture in os.listdir(architectures_path):
-        images_path = os.listdir(os.path.join('datasets', model, architecture))
+        images_path = os.listdir(os.path.join('/home/opontorno/data/opontorno/datasets', model, architecture))
         dcts_path = os.listdir(os.path.join('dcts', model, architecture))
         print(f'OK - all {architecture} images were used' if len(images_path)==len(dcts_path) else f'PROBLEM - {architecture}')
         # if not len(images_path)==len(dcts_path):

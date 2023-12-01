@@ -1,7 +1,7 @@
 from dcts_analysis import dset
 import numpy as np
 from sklearn.model_selection import train_test_split
-from imblearn.under_sampling import RandomUnderSampler
+from imblearn.under_sampling import RandomUnderSampler 
 
 perc_train = 0.7
 random_seed = 13
@@ -29,7 +29,7 @@ params_grids = {
     'svc' : {
     'C': [0.1, 0.5, 1, 3],                              # Regularization parameter.
     'gamma': [1, 0.1, 0.01],                   # Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’.
-    'kernel': ['linear', 'poly', 'rbf'],     # Specifies the kernel type to be used in the algorithm.
+    'kernel': ['linear', 'poly'],     # Specifies the kernel type to be used in the algorithm.
     'degree' : [2,3]                                    # Degree of the polynomial kernel function (‘poly’).
     },
     'knn' : {
