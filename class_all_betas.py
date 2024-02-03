@@ -1,76 +1,90 @@
-from fitmodels import *
-from settings import X_train, X_test, y_test, y_train, params_grids
+#%% IMPORT LIBRARIES
+import numpy as np
 import pickle
+from fitmodels import *
+from settings import *
+from sklearn.model_selection import train_test_split
 
-svc=True
+svc=False
 knn=True
 rf=True
 gb=True
 
-if svc:
-    print('SVC\n')
-    svc_all = fitsvc(X_train=X_train,
-                    y_train=y_train,
-                    X_test=X_test,
-                    y_test=y_test,
+QFmodel=dcts_path[-4:] if dcts_path.endswith('0') else 'RAW'
+print(f'\n--  {QFmodel}')
+
+#%% TRAINING MODELS
+if knn:
+    print('\nKNN\n')
+    knn_all = fitknn(X_train=train_betas,
+                    y_train=train_targets,
+                    X_test=test_betas,
+                    y_test=test_targets,
                     random_state=13,
                     gridsearch=False,
                     randomsearch=True,
-                    params_grid=params_grids['svc'],
-                    n_iter=50,
-                    cv_folds=3,
-                    verbose=3,
-                    plotcm=True)
-
-    pickle.dump(svc_all, open('models/all_betas/svc_all.pkl', 'wb'))
-
-if knn:
-    print('KNN\n')
-    knn_all = fitknn(X_train=X_train,
-                    y_train=y_train,
-                    X_test=X_test,
-                    y_test=y_test,
-                    random_state=13,
-                    gridsearch=True,
-                    randomsearch=False,
                     params_grid=params_grids['knn'],
                     n_iter=100,
                     cv_folds=3,
-                    verbose=3,
+                    verbose=0,
                     plotcm=True)
-
-    pickle.dump(knn_all, open('models/all_betas/knn_all.pkl', 'wb'))
+    pickle.dump(knn_all, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/knn_all.pkl', 'wb'))
+    for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
+        print(f'\nJPEG-TESTING {qf}: ')
+        dct_path=dcts_path+'_'+qf
+        X_test, y_test = get_train_test(dct_path, train=False, print_size=False)
+        getmetrics(y_test, knn_all.predict(X_test))
 
 if rf:
-    print('RANDOM FOREST')
-    rf_all = fitrf(X_train=X_train,
-                    y_train=y_train,
-                    X_test=X_test,
-                    y_test=y_test,
+    print('\nRANDOM FOREST\n')
+    rf_all = fitrf(X_train=train_betas,
+                    y_train=train_targets,
+                    X_test=test_betas,
+                    y_test=test_targets,
                     random_state=13,
                     gridsearch=False,
                     randomsearch=True,
                     params_grid=params_grids['rf'],
                     n_iter=100,
                     cv_folds=3,
-                    verbose=3,
+                    verbose=0,
                     plotcm=True)
-
-    pickle.dump(rf_all, open('models/all_betas/rf_all.pkl', 'wb'))
+    pickle.dump(rf_all, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/rf_all.pkl', 'wb'))
+    for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
+        print(f'\nJPEG-TESTING {qf}: ')
+        dct_path=dcts_path+'_'+qf
+        X_test, y_test = get_train_test(dct_path, train=False, print_size=False)
+        getmetrics(y_test, rf_all.predict(X_test))
 
 if gb:
-    print('GRADIENT BOOSTING')
-    gb_all = fitgb(X_train=X_train,
-                    y_train=y_train,
-                    X_test=X_test,
-                    y_test=y_test,
+    print('\nGRADIENT BOOSTING\n')
+    gb_all = fitgb(X_train=train_betas,
+                    y_train=train_targets,
+                    X_test=test_betas,
+                    y_test=test_targets,
                     random_state=13,
                     gridsearch=False,
                     randomsearch=True,
-                    params_grid=params_grids['rf'],
+                    params_grid=params_grids['gb'],
                     n_iter=100,
                     cv_folds=3,
-                    verbose=3,
+                    verbose=0,
                     plotcm=True)
+    pickle.dump(gb_all, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/gb_all.pkl', 'wb'))
+    for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
+        print(f'\nJPEG-TESTING {qf}: ')
+        dct_path=dcts_path+'_'+qf
+        X_test, y_test = get_train_test(dct_path, train=False, print_size=False)
+        getmetrics(y_test, gb_all.predict(X_test))
 
-    pickle.dump(gb_all, open('models/all_betas/gb_all.pkl', 'wb'))
+if svc:
+    print('\nSVC\n')
+    svc_all = SVC(gamma=0.1, kernel='poly', degree=2).fit(train_betas, train_betas)
+    print('MODEL PERFOMANCE:')
+    getmetrics(test_targets, svc_all.predict(test_betas), plotcm=True)
+    pickle.dump(svc_all, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/svc_all.pkl', 'wb'))
+    for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
+        print(f'\nJPEG-TESTING {qf}: ')
+        dct_path=dcts_path+'_'+qf
+        X_test, y_test = get_train_test(dct_path, train=False, print_size=False)
+        getmetrics(y_test, svc_all.predict(X_test))

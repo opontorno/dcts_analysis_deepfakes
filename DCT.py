@@ -12,9 +12,9 @@ import pickle
 
 ##- Parameters to be setted
 
-datasets_path = '/home/opontorno/data/opontorno/datasets'
-dcts_path='dcts'
-DC_coeff = False,
+datasets_path = ''
+dcts_path=''
+DC_coeff = False
 laplacian_stats = False
 
 def dct2(a):

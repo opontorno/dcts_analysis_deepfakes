@@ -1,30 +1,33 @@
-from dcts_analysis import dset
+from dcts_analysis import *
 import numpy as np
-from sklearn.model_selection import train_test_split
 from imblearn.under_sampling import RandomUnderSampler 
-
-perc_train = 0.7
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--qf')
+args = parser.parse_args()
+qf = args.qf
+if qf==None:
+    dcts_path = f'/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/datasets/dcts'
+else:
+    dcts_path = f'/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/datasets/dcts_QF{qf}'
+betas_train, betas_targets = get_train_test(dcts_path, guidance, train=True)
+test_betas, test_targets = get_train_test(dcts_path, guidance, train=False)
+dset = np.unique(np.concatenate((betas_train, betas_targets.reshape(-1, 1)), axis=1), axis=0)
 random_seed = 13
-betas = dset[:,:63]
-targets = dset[:,63].astype(int)
+betas_train = dset[:,:63]
+betas_targets = dset[:,63].astype(int)
 
 ## MAKE THE DATASET BALANCED
-class_counts = {label: count for label, count in zip(*np.unique(targets, return_counts=True))}
+## MAKE THE DATASET BALANCED
+class_counts = {label: count for label, count in zip(*np.unique(betas_targets, return_counts=True))}
 min_class_count = min(class_counts.values())
 min_class_label = min(class_counts, key=class_counts.get)
 undersampler = RandomUnderSampler(sampling_strategy={label: min_class_count for label in class_counts})
-betas_resampled, targets_resampled = undersampler.fit_resample(betas, targets)
-print(f'\nRESAMPLED BETAS: \ntype: {type(betas_resampled)} \nsize: {betas_resampled.shape}\n')
-print(f'RESAMPLED TARGETS: \ntype: {type(targets_resampled)} \nsize: {targets_resampled.shape} \nunique values: {np.unique(targets_resampled, return_counts=True)}')
+train_betas, train_targets = undersampler.fit_resample(betas_train, betas_targets)
+print(f'\nRESAMPLED BETAS: \ntype: {type(train_betas)} \nsize: {train_betas.shape}\n')
+print(f'RESAMPLED TARGETS: \ntype: {type(train_targets)} \nsize: {train_targets.shape} \nunique values: {np.unique(train_targets, return_counts=True)}')
 
-X_train, X_test, y_train, y_test = train_test_split(betas_resampled, targets_resampled, test_size=(1-perc_train), random_state = random_seed)
-print('\nAFTER SPLITTING: ')
-print(f'X_train shape:  {np.shape(X_train)}')
-print(f'y_train shape:  {np.shape(y_train)}, unique values: {np.unique(y_train, return_counts=True)}')
-
-print(f'X_test shape:  {np.shape(X_test)}')
-print(f'y_test shape:  {np.shape(y_test)}, unique values: {np.unique(y_test, return_counts=True)}')
-
+## PARATEMETERS GRIDS FOR REANDOM/GRIDSEARCH
 params_grids = {
     'svc' : {
     'C': [0.1, 0.5, 1, 3],                              # Regularization parameter.
