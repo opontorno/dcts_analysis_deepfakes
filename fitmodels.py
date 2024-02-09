@@ -8,13 +8,14 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 
-def getmetrics(labels, predictions, average="macro", plotcm: bool = False, classes=None, head=False):
+def getmetrics(labels, predictions, average="macro", plotcm: bool = False, head=False):
     if head: print('accuracy, precision, racall, f1-score')
-    print(f'{accuracy_score(labels, predictions)*100:.2f},{precision_score(labels, predictions, average=average)*100:.2f},{recall_score(labels, predictions, average=average)*100:.2f},{f1_score(labels, predictions, average=average)*100:.2f}')
+    acc, pre, rec, f1 = accuracy_score(labels, predictions), precision_score(labels, predictions, average=average), recall_score(labels, predictions, average=average), f1_score(labels, predictions, average=average)
     if plotcm:
         print('Confusion matrix: ')
         cm = confusion_matrix(labels, predictions)
         print(cm)
+    return round(acc*100,2), round(pre*100,2), round(rec*100,2), round(f1*100,2)
 
 def fitsvc(X_train, y_train, X_test, y_test,
            random_state=None, 
@@ -25,40 +26,27 @@ def fitsvc(X_train, y_train, X_test, y_test,
            n_iter:int=100, 
            plotcm:bool=False, 
            verbose=3):
-
     assert (gridsearch and randomsearch) != True
-
-    model_base = SVC(random_state=random_state)
-    model_base.fit(X_train,y_train)
-    print(f'- BASE MODEL performance:')
-    getmetrics(y_test, model_base.predict(X_test))
-
-    if (gridsearch or randomsearch) != False:
-        if gridsearch:
-            model_s = GridSearchCV(
-                estimator = SVC(random_state=random_state),
-                param_grid = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1
-                )
-        elif randomsearch:
-            model_s = RandomizedSearchCV(
-                estimator = SVC(random_state=random_state),
-                param_distributions = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1,
-                random_state=random_state,
-                n_iter=n_iter)
-
-        model_s.fit(X_train,y_train)
-        print(f'best parameters: {model_s.best_params_}')
-        print('- SEARCH MODEL performance:')
-        getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
-        return model_s
-    else:
-        return model_base
+    if gridsearch:
+        model_s = GridSearchCV(
+            estimator = SVC(random_state=random_state),
+            param_grid = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1
+            )
+    elif randomsearch:
+        model_s = RandomizedSearchCV(
+            estimator = SVC(random_state=random_state),
+            param_distributions = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1,
+            random_state=random_state,
+            n_iter=n_iter)
+    model_s.fit(X_train,y_train)
+    getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
+    return model_s
 
 def fitknn(X_train, y_train, X_test, y_test, 
            random_state=None, 
@@ -70,35 +58,26 @@ def fitknn(X_train, y_train, X_test, y_test,
            plotcm:bool=False, 
            verbose=3):
     assert (gridsearch and randomsearch) != True
-    model_base = KNeighborsClassifier()
-    model_base.fit(X_train,y_train)
-    print(f'- BASE MODEL performance:')
-    getmetrics(y_test, model_base.predict(X_test))
-    if (gridsearch or randomsearch) != False:
-        if gridsearch:
-            model_s = GridSearchCV(
-                estimator = KNeighborsClassifier(),
-                param_grid = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1
-                )
-        elif randomsearch:
-            model_s = RandomizedSearchCV(
-                estimator = KNeighborsClassifier(),
-                param_distributions = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1,
-                random_state=random_state,
-                n_iter=n_iter)
-        model_s.fit(X_train,y_train)
-        print(f'best parameters: {model_s.best_params_}')
-        print('- SEARCH MODEL performance:')
-        getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
-        return model_s
-    else:
-        return model_base
+    if gridsearch:
+        model_s = GridSearchCV(
+            estimator = KNeighborsClassifier(),
+            param_grid = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1
+            )
+    elif randomsearch:
+        model_s = RandomizedSearchCV(
+            estimator = KNeighborsClassifier(),
+            param_distributions = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1,
+            random_state=random_state,
+            n_iter=n_iter)
+    model_s.fit(X_train,y_train)
+    test_metrics = getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
+    return model_s, test_metrics
     
 def fitrf(X_train, y_train, X_test, y_test, 
           random_state=None, 
@@ -110,35 +89,26 @@ def fitrf(X_train, y_train, X_test, y_test,
           plotcm:bool=False, 
           verbose=3):
     assert (gridsearch and randomsearch) != True
-    model_base = RandomForestClassifier(random_state=random_state)
-    model_base.fit(X_train,y_train)
-    print(f'- BASE MODEL performance:')
-    getmetrics(y_test, model_base.predict(X_test))
-    if (gridsearch or randomsearch) != False:
-        if gridsearch:
-            model_s = GridSearchCV(
-                estimator = RandomForestClassifier(random_state=random_state),
-                param_grid = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1
-                )
-        elif randomsearch:
-            model_s = RandomizedSearchCV(
-                estimator = RandomForestClassifier(random_state=random_state),
-                param_distributions = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1,
-                random_state=random_state,
-                n_iter=n_iter)
-        model_s.fit(X_train,y_train)
-        print(f'best parameters: {model_s.best_params_}')
-        print('- SEARCH MODEL performance:')
-        getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
-        return model_s
-    else:
-        return model_base
+    if gridsearch:
+        model_s = GridSearchCV(
+            estimator = RandomForestClassifier(random_state=random_state),
+            param_grid = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1
+            )
+    elif randomsearch:
+        model_s = RandomizedSearchCV(
+            estimator = RandomForestClassifier(random_state=random_state),
+            param_distributions = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1,
+            random_state=random_state,
+            n_iter=n_iter)
+    model_s.fit(X_train,y_train)
+    test_metrics = getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
+    return model_s, test_metrics
     
 def fitgb(X_train, y_train, X_test, y_test, 
           random_state=None, 
@@ -150,33 +120,24 @@ def fitgb(X_train, y_train, X_test, y_test,
           plotcm:bool=False, 
           verbose=3):
     assert (gridsearch and randomsearch) != True
-    model_base = GradientBoostingClassifier(random_state=random_state)
-    model_base.fit(X_train,y_train)
-    print(f'- BASE MODEL performance:')
-    getmetrics(y_test, model_base.predict(X_test))
-    if (gridsearch or randomsearch) != False:
-        if gridsearch:
-            model_s = GridSearchCV(
-                estimator = GradientBoostingClassifier(random_state=random_state),
-                param_grid = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1
-                )
-        elif randomsearch:
-            model_s = RandomizedSearchCV(
-                estimator = GradientBoostingClassifier(random_state=random_state),
-                param_distributions = params_grid,
-                cv = cv_folds, 
-                verbose=verbose,
-                n_jobs = -1,
-                random_state=random_state,
-                n_iter=n_iter
-                )
-        model_s.fit(X_train,y_train)
-        print(f'best parameters: {model_s.best_params_}')
-        print('- SEARCH MODEL performance:')
-        getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
-        return model_s
-    else:
-        return model_base
+    if gridsearch:
+        model_s = GridSearchCV(
+            estimator = GradientBoostingClassifier(random_state=random_state),
+            param_grid = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1
+            )
+    elif randomsearch:
+        model_s = RandomizedSearchCV(
+            estimator = GradientBoostingClassifier(random_state=random_state),
+            param_distributions = params_grid,
+            cv = cv_folds, 
+            verbose=verbose,
+            n_jobs = -1,
+            random_state=random_state,
+            n_iter=n_iter
+            )
+    model_s.fit(X_train,y_train)
+    test_metrics = getmetrics(y_test, model_s.predict(X_test), plotcm=plotcm)
+    return model_s, test_metrics

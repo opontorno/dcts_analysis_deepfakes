@@ -31,7 +31,7 @@ ylime_pos_test = test_targets
 
 if knn:
     print('\n-  KNN\n')
-    knn_poslime = fitknn(X_train=Xlime_pos_train,
+    knn_poslime, (acc,_,_,f1) = fitknn(X_train=Xlime_pos_train,
                 y_train=ylime_pos_train,
                 X_test=Xlime_pos_test,
                 y_test=ylime_pos_test,
@@ -51,7 +51,7 @@ if knn:
         
 if rf:
     print('\n-  RANDOM FOREST\n')
-    rf_poslime = fitrf(X_train=Xlime_pos_train,
+    rf_poslime, (acc,_,_,f1) = fitrf(X_train=Xlime_pos_train,
                 y_train=ylime_pos_train,
                 X_test=Xlime_pos_test,
                 y_test=ylime_pos_test,
@@ -73,7 +73,7 @@ if rf:
 
 if gb:
     print('\n-  GRADIENT BOOSTING\n')
-    gb_poslime = fitgb(X_train=Xlime_pos_train,
+    gb_poslime, (acc,_,_,f1) = fitgb(X_train=Xlime_pos_train,
                 y_train=ylime_pos_train,
                 X_test=Xlime_pos_test,
                 y_test=ylime_pos_test,
@@ -114,7 +114,7 @@ ylime_abs_sign_test = test_targets
 
 if knn:
     print('\nKNN\n')
-    knn_abs_sign = fitknn(X_train=Xlime_abs_sign_train,
+    knn_abs_sign, (acc,_,_,f1) = fitknn(X_train=Xlime_abs_sign_train,
                 y_train=ylime_abs_sign_train,
                 X_test=Xlime_abs_sign_test,
                 y_test=ylime_abs_sign_test,
@@ -136,7 +136,7 @@ if knn:
 
 if rf:
     print('\nRANDOM FOREST\n')
-    rf_abs_sign = fitrf(X_train=Xlime_abs_sign_train,
+    rf_abs_sign, (acc,_,_,f1) = fitrf(X_train=Xlime_abs_sign_train,
                 y_train=ylime_abs_sign_train,
                 X_test=Xlime_abs_sign_test,
                 y_test=ylime_abs_sign_test,
@@ -158,7 +158,7 @@ if rf:
 
 if gb:
     print('\nGRADIENT BOOSTING\n')
-    gb_abs_sign = fitgb(X_train=Xlime_abs_sign_train,
+    gb_abs_sign, (acc,_,_,f1) = fitgb(X_train=Xlime_abs_sign_train,
                 y_train=ylime_abs_sign_train,
                 X_test=Xlime_abs_sign_test,
                 y_test=ylime_abs_sign_test,
