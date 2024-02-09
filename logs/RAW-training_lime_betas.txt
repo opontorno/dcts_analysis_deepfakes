@@ -1,0 +1,260 @@
+--     GRADIENT BOOSTING
+
+
+--    USING ALL POSITIVE LIME COEFFICIENTS:
+
+- BASE MODEL performance:
+accuracy: 0.7178
+precision: 0.7025
+recall: 0.7186
+f1 score: 0.6976
+best parameters: {'n_estimators': 410, 'min_samples_split': 5, 'min_samples_leaf': 15, 'max_features': None, 'max_depth': 26, 'loss': 'log_loss', 'learning_rate': 0.1, 'criterion': 'friedman_mse'}
+- SEARCH MODEL performance:
+accuracy: 0.8221
+precision: 0.7956
+recall: 0.8182
+f1 score: 0.8034
+Confusion matrix: 
+[[2074  117  277]
+ [ 504 3738  287]
+ [ 294   87 1425]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.4462
+precision: 0.5669
+recall: 0.5403
+f1 score: 0.4384
+
+JPEG-TESTING QF70: 
+accuracy: 0.3472
+precision: 0.4431
+recall: 0.4640
+f1 score: 0.3200
+
+JPEG-TESTING QF50: 
+accuracy: 0.3148
+precision: 0.3856
+recall: 0.4154
+f1 score: 0.2862
+
+JPEG-TESTING QF30: 
+accuracy: 0.3064
+precision: 0.3241
+recall: 0.3927
+f1 score: 0.2703
+
+--    USING ALL ABS-SIGNIFICATIVE LIME COEFFICIENTS:
+
+- BASE MODEL performance:
+accuracy: 0.7141
+precision: 0.6973
+recall: 0.7124
+f1 score: 0.6920
+best parameters: {'n_estimators': 410, 'min_samples_split': 5, 'min_samples_leaf': 15, 'max_features': None, 'max_depth': 26, 'loss': 'log_loss', 'learning_rate': 0.1, 'criterion': 'friedman_mse'}
+- SEARCH MODEL performance:
+accuracy: 0.8068
+precision: 0.7789
+recall: 0.8022
+f1 score: 0.7868
+Confusion matrix: 
+[[2010  140  318]
+ [ 530 3687  312]
+ [ 311   90 1405]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.4533
+precision: 0.5627
+recall: 0.5488
+f1 score: 0.4445
+
+JPEG-TESTING QF70: 
+accuracy: 0.3449
+precision: 0.4289
+recall: 0.4599
+f1 score: 0.3212
+
+JPEG-TESTING QF50: 
+accuracy: 0.3142
+precision: 0.3764
+recall: 0.4157
+f1 score: 0.2906
+
+JPEG-TESTING QF30: 
+accuracy: 0.3058
+precision: 0.3161
+recall: 0.3914
+f1 score: 0.2710
+
+--     RANDOM FOREST
+
+
+--    USING ALL POSITIVE LIME COEFFICIENTS:
+
+- BASE MODEL performance:
+accuracy: 0.7854
+precision: 0.7602
+recall: 0.7839
+f1 score: 0.7661
+best parameters: {'n_estimators': 433, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': 'log2', 'max_depth': 26, 'criterion': 'entropy', 'bootstrap': False}
+- SEARCH MODEL performance:
+accuracy: 0.8005
+precision: 0.7746
+recall: 0.7983
+f1 score: 0.7816
+Confusion matrix: 
+[[2035  124  309]
+ [ 593 3619  317]
+ [ 331   82 1393]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.4192
+precision: 0.5312
+recall: 0.5205
+f1 score: 0.3985
+
+JPEG-TESTING QF70: 
+accuracy: 0.3342
+precision: 0.4760
+recall: 0.4530
+f1 score: 0.3025
+
+JPEG-TESTING QF50: 
+accuracy: 0.3023
+precision: 0.5012
+recall: 0.4035
+f1 score: 0.2749
+
+JPEG-TESTING QF30: 
+accuracy: 0.2902
+precision: 0.2460
+recall: 0.3784
+f1 score: 0.2606
+
+--    USING ALL ABS-SIGNIFICATIVE LIME COEFFICIENTS:
+
+- BASE MODEL performance:
+accuracy: 0.7726
+precision: 0.7482
+recall: 0.7713
+f1 score: 0.7530
+best parameters: {'n_estimators': 366, 'min_samples_split': 2, 'min_samples_leaf': 2, 'max_features': 'sqrt', 'max_depth': 30, 'criterion': 'log_loss', 'bootstrap': False}
+- SEARCH MODEL performance:
+accuracy: 0.7808
+precision: 0.7543
+recall: 0.7777
+f1 score: 0.7603
+Confusion matrix: 
+[[1983  136  349]
+ [ 641 3539  349]
+ [ 371   84 1351]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.4354
+precision: 0.5406
+recall: 0.5365
+f1 score: 0.4197
+
+JPEG-TESTING QF70: 
+accuracy: 0.3298
+precision: 0.4129
+recall: 0.4459
+f1 score: 0.3004
+
+JPEG-TESTING QF50: 
+accuracy: 0.2979
+precision: 0.4247
+recall: 0.3972
+f1 score: 0.2714
+
+JPEG-TESTING QF30: 
+accuracy: 0.2946
+precision: 0.2908
+recall: 0.3820
+f1 score: 0.2633
+
+--     KNN
+
+
+--    USING ALL POSITIVE LIME COEFFICIENTS:
+
+- BASE MODEL performance:
+accuracy: 0.6749
+precision: 0.6409
+recall: 0.6536
+f1 score: 0.6443
+best parameters: {'weights': 'distance', 'p': 2, 'n_neighbors': 9, 'leaf_size': 40, 'algorithm': 'brute'}
+- SEARCH MODEL performance:
+accuracy: 0.6774
+precision: 0.6431
+recall: 0.6592
+f1 score: 0.6477
+Confusion matrix: 
+[[1577  379  512]
+ [ 629 3274  626]
+ [ 382  312 1112]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.6723
+precision: 0.6378
+recall: 0.6536
+f1 score: 0.6422
+
+JPEG-TESTING QF70: 
+accuracy: 0.6177
+precision: 0.5933
+recall: 0.6057
+f1 score: 0.5900
+
+JPEG-TESTING QF50: 
+accuracy: 0.5324
+precision: 0.5268
+recall: 0.5323
+f1 score: 0.5081
+
+JPEG-TESTING QF30: 
+accuracy: 0.4486
+precision: 0.4542
+recall: 0.4717
+f1 score: 0.4287
+
+--    USING ALL ABS-SIGNIFICATIVE LIME COEFFICIENTS:
+
+- BASE MODEL performance:
+accuracy: 0.6695
+precision: 0.6336
+recall: 0.6465
+f1 score: 0.6373
+best parameters: {'weights': 'distance', 'p': 2, 'n_neighbors': 9, 'leaf_size': 40, 'algorithm': 'brute'}
+- SEARCH MODEL performance:
+accuracy: 0.6807
+precision: 0.6481
+recall: 0.6661
+f1 score: 0.6525
+Confusion matrix: 
+[[1611  336  521]
+ [ 639 3245  645]
+ [ 387  283 1136]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.6751
+precision: 0.6421
+recall: 0.6595
+f1 score: 0.6464
+
+JPEG-TESTING QF70: 
+accuracy: 0.6481
+precision: 0.6181
+recall: 0.6333
+f1 score: 0.6191
+
+JPEG-TESTING QF50: 
+accuracy: 0.5989
+precision: 0.5743
+recall: 0.5855
+f1 score: 0.5694
+
+JPEG-TESTING QF30: 
+accuracy: 0.5305
+precision: 0.5148
+recall: 0.5299
+f1 score: 0.5030

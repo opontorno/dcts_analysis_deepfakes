@@ -1,0 +1,154 @@
+BETAS: 
+type: <class 'numpy.ndarray'> 
+size: (63533, 63)
+
+TARGETS: 
+type: <class 'numpy.ndarray'> 
+size: (63533,) 
+unique values: (array([0, 1, 2]), array([16873, 33043, 13617]))
+
+BETAS: 
+type: <class 'numpy.ndarray'> 
+size: (8803, 63)
+
+TARGETS: 
+type: <class 'numpy.ndarray'> 
+size: (8803,) 
+unique values: (array([0, 1, 2]), array([2468, 4529, 1806]))
+
+
+RESAMPLED BETAS: 
+type: <class 'numpy.ndarray'> 
+size: (40653, 63)
+
+RESAMPLED TARGETS: 
+type: <class 'numpy.ndarray'> 
+size: (40653,) 
+unique values: (array([0, 1, 2]), array([13551, 13551, 13551]))
+--  RAW
+
+KNN
+
+- BASE MODEL performance:
+accuracy: 0.6810
+precision: 0.6477
+recall: 0.6621
+f1 score: 0.6518
+best parameters: {'weights': 'distance', 'p': 2, 'n_neighbors': 9, 'leaf_size': 40, 'algorithm': 'brute'}
+- SEARCH MODEL performance:
+accuracy: 0.6876
+precision: 0.6559
+recall: 0.6749
+f1 score: 0.6605
+Confusion matrix: 
+[[1611  341  516]
+ [ 608 3267  654]
+ [ 365  266 1175]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.6845
+precision: 0.6518
+recall: 0.6699
+f1 score: 0.6565
+
+JPEG-TESTING QF70: 
+accuracy: 0.6434
+precision: 0.6157
+recall: 0.6311
+f1 score: 0.6153
+
+JPEG-TESTING QF50: 
+accuracy: 0.5646
+precision: 0.5473
+recall: 0.5561
+f1 score: 0.5355
+
+JPEG-TESTING QF30: 
+accuracy: 0.4778
+precision: 0.4704
+recall: 0.4900
+f1 score: 0.4547
+
+RANDOM FOREST
+
+- BASE MODEL performance:
+accuracy: 0.7866
+precision: 0.7631
+recall: 0.7871
+f1 score: 0.7685
+best parameters: {'n_estimators': 433, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': 'log2', 'max_depth': 26, 'criterion': 'entropy', 'bootstrap': False}
+- SEARCH MODEL performance:
+accuracy: 0.7959
+precision: 0.7725
+recall: 0.7967
+f1 score: 0.7781
+Confusion matrix: 
+[[2069   92  307]
+ [ 661 3550  318]
+ [ 342   77 1387]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.4175
+precision: 0.5425
+recall: 0.5243
+f1 score: 0.3958
+
+JPEG-TESTING QF70: 
+accuracy: 0.3330
+precision: 0.4816
+recall: 0.4515
+f1 score: 0.3023
+
+JPEG-TESTING QF50: 
+accuracy: 0.2954
+precision: 0.5417
+recall: 0.3953
+f1 score: 0.2681
+
+JPEG-TESTING QF30: 
+accuracy: 0.2944
+precision: 0.2581
+recall: 0.3816
+f1 score: 0.2637
+
+GRADIENT BOOSTING
+
+- BASE MODEL performance:
+accuracy: 0.7219
+precision: 0.7060
+recall: 0.7224
+f1 score: 0.7015
+best parameters: {'n_estimators': 500, 'min_samples_split': 5, 'min_samples_leaf': 15, 'max_features': None, 'max_depth': 28, 'loss': 'log_loss', 'learning_rate': 0.1, 'criterion': 'squared_error'}
+- SEARCH MODEL performance:
+accuracy: 0.8257
+precision: 0.7998
+recall: 0.8237
+f1 score: 0.8081
+Confusion matrix: 
+[[2070  112  286]
+ [ 514 3744  271]
+ [ 276   75 1455]]
+
+JPEG-TESTING QF90: 
+accuracy: 0.4468
+precision: 0.5841
+recall: 0.5434
+f1 score: 0.4408
+
+JPEG-TESTING QF70: 
+accuracy: 0.3510
+precision: 0.5044
+recall: 0.4675
+f1 score: 0.3284
+
+JPEG-TESTING QF50: 
+accuracy: 0.3222
+precision: 0.4405
+recall: 0.4273
+f1 score: 0.2926
+
+JPEG-TESTING QF30: 
+accuracy: 0.3058
+precision: 0.3264
+recall: 0.3902
+f1 score: 0.2693
