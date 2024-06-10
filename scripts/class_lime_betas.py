@@ -3,6 +3,7 @@ import numpy as np
 import pickle
 from fitmodels import *
 from settings import *
+from wd import working_dir
 from sklearn.model_selection import train_test_split
 
 svc=False
@@ -43,7 +44,7 @@ if knn:
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-    if save_models: pickle.dump(knn_poslime, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/knn_all-pos_lime.pkl', 'wb'))
+    if save_models: pickle.dump(knn_poslime, open(working_dir+'models/'+QFmodel+'/knn_all-pos_lime.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -63,7 +64,7 @@ if rf:
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-    if save_models: pickle.dump(rf_poslime, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/rf_all-pos_lime.pkl', 'wb'))
+    if save_models: pickle.dump(rf_poslime, open(working_dir+'models/'+QFmodel+'/rf_all-pos_lime.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -86,7 +87,7 @@ if gb:
                 verbose=0,
                 plotcm=True)
 
-    if save_models: pickle.dump(gb_poslime, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/gb_all-pos_lime.pkl', 'wb'))
+    if save_models: pickle.dump(gb_poslime, open(working_dir+'models/'+QFmodel+'/gb_all-pos_lime.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -100,7 +101,7 @@ if svc:
     print('MODEL PERFOMANCE:')
     getmetrics(ylime_pos_test, svc_l.predict(Xlime_pos_test), plotcm=True)
 
-    if save_models: pickle.dump(svc_l, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/svc_all-pos_lime.pkl', 'wb'))
+    if save_models: pickle.dump(svc_l, open(working_dir+'models/'+QFmodel+'/svc_all-pos_lime.pkl', 'wb'))
 
 #%% SETTINGS FOR CLASSIFICATION USING THE ALL ABS-SIGNIFICATIVE LIME BETAS
 abs_sign = np.where(abs(avg_arr)>np.median(abs(avg_arr)))[0].tolist()
@@ -126,7 +127,7 @@ if knn:
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-    if save_models: pickle.dump(knn_abs_sign, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/knn_all-absign_lime.pkl', 'wb'))
+    if save_models: pickle.dump(knn_abs_sign, open(working_dir+'models/'+QFmodel+'/knn_all-absign_lime.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -148,7 +149,7 @@ if rf:
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-    if save_models: pickle.dump(rf_abs_sign, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/rf_all-absign_lime.pkl', 'wb'))
+    if save_models: pickle.dump(rf_abs_sign, open(working_dir+'models/'+QFmodel+'/rf_all-absign_lime.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -170,7 +171,7 @@ if gb:
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-    if save_models: pickle.dump(gb_abs_sign, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/gb_all-absign_lime.pkl', 'wb'))
+    if save_models: pickle.dump(gb_abs_sign, open(working_dir+'models/'+QFmodel+'/gb_all-absign_lime.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -184,4 +185,4 @@ if svc:
     print('MODEL PERFOMANCE:')
     getmetrics(ylime_abs_sign_test, svc_l.predict(Xlime_abs_sign_test), plotcm=True)
 
-    if save_models: pickle.dump(svc_l, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/'+QFmodel+'/svc_all-absign_lime.pkl', 'wb'))
+    if save_models: pickle.dump(svc_l, open(working_dir+'models/'+QFmodel+'/svc_all-absign_lime.pkl', 'wb'))

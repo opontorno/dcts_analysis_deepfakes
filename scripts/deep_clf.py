@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import captum
 from captum.attr import Lime
+from wd import working_dir
 import time, os, pickle
 import matplotlib.pyplot as plt
 import warnings
@@ -47,7 +48,7 @@ class betas_dset(Dataset):
             betas = torch.tensor(pickle.load(open(file_path, 'rb')))
         return betas, class_idx
 
-dset = betas_dset('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/datasets/dcts_QF30', qf100=False)
+dset = betas_dset(working_dir+'datasets/dcts_QF30', qf100=False)
 trainset, testingset = random_split(dset, lengths=[.7,.3])
 validset, testset = random_split(testingset, lengths=[.5,.5])
 trainloader = DataLoader(

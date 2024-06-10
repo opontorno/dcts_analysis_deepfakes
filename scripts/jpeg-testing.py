@@ -2,12 +2,13 @@
 import numpy as np
 import pickle
 import os
+from wd import working_dir
 from settings import params_grids
 from imblearn.under_sampling import RandomUnderSampler 
 from fitmodels import *
 from dcts_analysis import *
 
-dcts_path = '/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/datasets/dcts'
+dcts_path = working_dir+'datasets/dcts'
 train_betas, train_targets = get_train_test(dcts_path, guidance, train=True)
 test_betas, test_targets = get_train_test(dcts_path, guidance, train=False)
 dset = np.unique(np.concatenate((train_betas, train_targets.reshape(-1, 1)), axis=1), axis=0)
@@ -52,7 +53,7 @@ gb_poslime = fitgb(X_train=Xlime_pos_train,
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-pickle.dump(gb_poslime, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/gb_all-pos_lime.pkl', 'wb'))
+pickle.dump(gb_poslime, open(working_dir+'models/jpeg_testing/gb_all-pos_lime.pkl', 'wb'))
 
 for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
     print(f'\nJPEG-TESTING {qf}: ')
@@ -81,7 +82,7 @@ gb_abs_sign = fitgb(X_train=Xlime_abs_sign_train,
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-pickle.dump(gb_abs_sign, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/gb_all-absign_lime.pkl', 'wb'))
+pickle.dump(gb_abs_sign, open(working_dir+'models/jpeg_testing/gb_all-absign_lime.pkl', 'wb'))
 
 for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
     print(f'\nJPEG-TESTING {qf}: ')
@@ -116,7 +117,7 @@ rf_poslime = fitrf(X_train=Xlime_pos_train,
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-pickle.dump(rf_poslime, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/rf_all-pos_lime.pkl', 'wb'))
+pickle.dump(rf_poslime, open(working_dir+'models/jpeg_testing/rf_all-pos_lime.pkl', 'wb'))
 
 for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
     print(f'\nJPEG-TESTING {qf}: ')
@@ -145,7 +146,7 @@ rf_abs_sign = fitrf(X_train=Xlime_abs_sign_train,
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-pickle.dump(rf_abs_sign, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/rf_all-absign_lime.pkl', 'wb'))
+pickle.dump(rf_abs_sign, open(working_dir+'models/jpeg_testing/rf_all-absign_lime.pkl', 'wb'))
 for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
     print(f'\nJPEG-TESTING {qf}: ')
     dct_path=dcts_path+'_'+qf
@@ -179,7 +180,7 @@ knn_poslime = fitknn(X_train=Xlime_pos_train,
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-pickle.dump(knn_poslime, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/knn_all-pos_lime.pkl', 'wb'))
+pickle.dump(knn_poslime, open(working_dir+'models/jpeg_testing/knn_all-pos_lime.pkl', 'wb'))
 for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
     print(f'\nJPEG-TESTING {qf}: ')
     dct_path=dcts_path+'_'+qf
@@ -207,7 +208,7 @@ knn_abs_sign = fitknn(X_train=Xlime_abs_sign_train,
                 cv_folds=3,
                 verbose=0,
                 plotcm=True)
-pickle.dump(knn_abs_sign, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/knn_all-absign_lime.pkl', 'wb'))
+pickle.dump(knn_abs_sign, open(working_dir+'models/jpeg_testing/knn_all-absign_lime.pkl', 'wb'))
 for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
     print(f'\nJPEG-TESTING {qf}: ')
     dct_path=dcts_path+'_'+qf
@@ -239,7 +240,7 @@ for last in range(35,30,-1):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(gb_l, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/gb_l'+str(last)+'.pkl', 'wb'))
+    pickle.dump(gb_l, open(working_dir+'models/jpeg_testing/gb_l'+str(last)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -270,7 +271,7 @@ for last in range(35,30,-1):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(rf_l, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/rf_l'+str(last)+'.pkl', 'wb'))
+    pickle.dump(rf_l, open(working_dir+'models/jpeg_testing/rf_l'+str(last)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -301,7 +302,7 @@ for last in range(35,30,-1):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(knn_l, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/knn_l'+str(last)+'.pkl', 'wb'))
+    pickle.dump(knn_l, open(working_dir+'models/jpeg_testing/knn_l'+str(last)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -333,7 +334,7 @@ for first in range(30,27,-1):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(gb_f, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/gb_f'+str(first)+'.pkl', 'wb'))
+    pickle.dump(gb_f, open(working_dir+'models/jpeg_testing/gb_f'+str(first)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -364,7 +365,7 @@ for first in range(30,27,-1):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(rf_f, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/rf_f'+str(first)+'.pkl', 'wb'))
+    pickle.dump(rf_f, open(working_dir+'models/jpeg_testing/rf_f'+str(first)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -395,7 +396,7 @@ for first in range(30,27,-1):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(knn_f, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/knn_f'+str(first)+'.pkl', 'wb'))
+    pickle.dump(knn_f, open(working_dir+'models/jpeg_testing/knn_f'+str(first)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -427,7 +428,7 @@ for center in range(13,16):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(gb_f, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/gb_c'+str(center)+'.pkl', 'wb'))
+    pickle.dump(gb_f, open(working_dir+'models/jpeg_testing/gb_c'+str(center)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -458,7 +459,7 @@ for center in range(13,16):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(rf_f, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/rf_c'+str(center)+'.pkl', 'wb'))
+    pickle.dump(rf_f, open(working_dir+'models/jpeg_testing/rf_c'+str(center)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf
@@ -489,7 +490,7 @@ for center in range(13,16):
                     verbose=0,
                     plotcm=True)
 
-    pickle.dump(knn_f, open('/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/models/jpeg_testing/knn_c'+str(center)+'.pkl', 'wb'))
+    pickle.dump(knn_f, open(working_dir+'models/jpeg_testing/knn_c'+str(center)+'.pkl', 'wb'))
     for qf in ['QF90', 'QF70', 'QF50', 'QF30']:
         print(f'\nJPEG-TESTING {qf}: ')
         dct_path=dcts_path+'_'+qf

@@ -1,17 +1,27 @@
-from dcts_analysis import *
+import argparse, os
 import numpy as np
+from dcts_analysis import *
+from wd import working_dir
 from imblearn.under_sampling import RandomUnderSampler 
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('--qf')
-args = parser.parse_args()
-qf = args.qf
-if qf==None:
-    dcts_path = f'/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/datasets/dcts'
+
+def get_parser():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--qf', choices=[None, '90', '70', '50', '30', '10'], default=None)
+    parser.add_argument('-guidance', '--guidance_path', type=str)
+
+    args = parser.parse_args()
+    return args
+
+parser = get_parser()
+
+if parser.qf==None:
+    dcts_path = os.path.join(working_dir, 'datasets/dcts')
 else:
-    dcts_path = f'/home/opontorno/data/opontorno/research_activities/dcts_analysis_deepfakes/datasets/dcts_QF{qf}'
-betas_train, betas_targets = get_train_test(dcts_path, guidance, train=True)
-test_betas, test_targets = get_train_test(dcts_path, guidance, train=False)
+    dcts_path = os.path.join(working_dir, f'datasets/dcts_QF{qf}')
+
+betas_train, betas_targets = get_train_test(dcts_path, parser.guidance_path, train=True)
+test_betas, test_targets = get_train_test(dcts_path, parser.guidance_path, train=False)
 dset = np.unique(np.concatenate((betas_train, betas_targets.reshape(-1, 1)), axis=1), axis=0)
 random_seed = 13
 betas_train = dset[:,:63]
