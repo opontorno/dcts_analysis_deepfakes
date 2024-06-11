@@ -10,7 +10,7 @@ def getparser():
     parser.add_argument('-svc', '--fit_svc', type=bool, default=False)
     parser.add_argument('-knn', '--fit_knn', type=bool, default=False)
     parser.add_argument('-rf', '--fit_rf', type=bool, default=False)
-    parser.add_argument('gb', '--fit_gb', type=bool, default=False)
+    parser.add_argument('-gb', '--fit_gb', type=bool, default=False)
     parser.add_argument('-save_m', '--save_models', type=bool, default=False)
 
     args = parser.parse_args()
